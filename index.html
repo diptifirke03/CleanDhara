@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CleanDhara - Ganga Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e6f3ff;
+      color: #003366;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    header {
+      background-color: #66b3ff;
+      padding: 20px;
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .quiz-container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    }
+    .question {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin: 8px 0;
+      padding: 10px;
+      background: #cce6ff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .options button:hover {
+      background: #99ccff;
+    }
+    .result {
+      font-size: 22px;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    CleanDhara - Ganga Awareness Quiz
+  </header>
+
+  <div class="quiz-container">
+    <div id="quiz"></div>
+    <div id="result" class="result"></div>
+    <button id="nextBtn" style="display:none; margin-top:20px; padding:10px 20px; background:#66b3ff; color:white; border:none; border-radius:10px;">Next</button>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        question: "What should we avoid throwing in the Ganga river?",
+        options: ["Flowers", "Plastic", "Holy water", "Coins"],
+        answer: "Plastic"
+      },
+      {
+        question: "Which practice keeps Ganga clean?",
+        options: ["Dumping waste", "Using dustbins", "Bathing animals", "Throwing food"],
+        answer: "Using dustbins"
+      },
+      {
+        question: "Why is it important to keep Ganga clean?",
+        options: ["For tourism", "For marine life", "For drinking water", "All of the above"],
+        answer: "All of the above"
+      },
+      {
+        question: "Which of these is eco-friendly offering to Ganga?",
+        options: ["Plastic flowers", "Biodegradable flowers", "Polythene bags", "Thermocol"],
+        answer: "Biodegradable flowers"
+      },
+      {
+        question: "What should we do with household waste instead of throwing it in rivers?",
+        options: ["Burn it", "Segregate and compost/recycle", "Throw in drains", "Leave it on roads"],
+        answer: "Segregate and compost/recycle"
+      },
+      {
+        question: "Which government program focuses on cleaning river Ganga?",
+        options: ["Swachh Bharat Abhiyan", "Namami Gange", "Jal Jeevan Mission", "Clean India Drive"],
+        answer: "Namami Gange"
+      },
+      {
+        question: "Which waste is most harmful to aquatic life?",
+        options: ["Banana peels", "Paper", "Plastic bags", "Leaves"],
+        answer: "Plastic bags"
+      },
+      {
+        question: "What should pilgrims use instead of plastic bags for offerings?",
+        options: ["Cloth bags", "Plastic bottles", "Aluminium foil", "Thermocol plates"],
+        answer: "Cloth bags"
+      },
+      {
+        question: "How can industries help keep Ganga clean?",
+        options: ["Release untreated waste", "Use proper treatment plants", "Dump chemical waste", "Divert into drains"],
+        answer: "Use proper treatment plants"
+      },
+      {
+        question: "Who is responsible for keeping Ganga clean?",
+        options: ["Only government", "Only NGOs", "Citizens and government together", "Nobody"],
+        answer: "Citizens and government together"
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    const quizEl = document.getElementById('quiz');
+    const resultEl = document.getElementById('result');
+    const nextBtn = document.getElementById('nextBtn');
+
+    function loadQuiz() {
+      if(currentQuestion < quizData.length) {
+        const q = quizData[currentQuestion];
+        quizEl.innerHTML = `
+          <div class="question">${q.question}</div>
+          <div class="options">
+            ${q.options.map(opt => `<button onclick=checkAnswer(this)>${opt}</button>`).join('')}
+          </div>
+        `;
+        resultEl.innerHTML = "";
+        nextBtn.style.display = "none";
+      } else {
+        quizEl.innerHTML = "<h2>Quiz Completed!</h2>";
+        resultEl.innerHTML = `Your Score: ${score}/${quizData.length}`;
+        nextBtn.style.display = "none";
+      }
+    }
+
+    function checkAnswer(btn) {
+      const q = quizData[currentQuestion];
+      if(btn.innerText === q.answer) {
+        resultEl.innerHTML = "✅ Correct!";
+        score++;
+      } else {
+        resultEl.innerHTML = `❌ Wrong! Correct answer is: ${q.answer}`;
+      }
+      nextBtn.style.display = "inline-block";
+    }
+
+    nextBtn.addEventListener('click', () => {
+      currentQuestion++;
+      loadQuiz();
+    });
+
+    loadQuiz();
+  </script>
+</body>
+</html>
